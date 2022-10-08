@@ -79,3 +79,10 @@ set t_8f=^[[38;2;%lu;%lu;%lum
 "This unsets the "last search pattern" register
 nnoremap <CR> :noh<CR><CR>
 nnoremap <ESC> :noh<CR><CR>
+
+" Center cursor verically
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+        \ let &scrolloff=winheight(win_getid())/2
+augroup END
