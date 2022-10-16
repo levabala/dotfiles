@@ -63,7 +63,7 @@ set path+=**
 set wildmenu
 set wildignore+=**/node_modules/**,**/dist/**,**/build/**
 
-set clipboard^=unnamed
+set clipboard+=unnamedplus
 set t_vb=
 set tw=0
 

@@ -36,6 +36,7 @@ end
 
 local setup_keymaps_formatting = function(client, bufnr)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+
   -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
@@ -139,8 +140,11 @@ require("typescript").setup({
 
 -- TODO: move outside lsp.lua?
 require'nvim-treesitter.configs'.setup{
+  indent = {
+    enable = true
+  },
   highlight={
-    enable=true
+    enable = true
   },
   incremental_selection = {
     enable = true,
