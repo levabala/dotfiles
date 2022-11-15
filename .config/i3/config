@@ -191,6 +191,7 @@ exec_always  xset r rate 200 40
 exec_always  "setxkbmap -option 'ctrl:nocaps' -option 'grp:alt_shift_toggle' -layout us,ru"
 hide_edge_borders smart
 exec_always xinput set-prop "Apple Inc. Magic Trackpad 2" "libinput Tapping Enabled" 1
+exec_always xinput set-prop "ELAN050A:00 04F3:3158 Touchpad" "libinput Tapping Enabled" 1
 exec_always xinput set-prop "MSFT0001:00 04F3:31DD Touchpad" "libinput Tapping Enabled" 1
 exec flameshoot &
 exec xss-lock --transfer-sleep-lock -- i3lock --nofork
