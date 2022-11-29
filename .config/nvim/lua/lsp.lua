@@ -95,18 +95,18 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require("null-ls").setup({
-    sources = {
-        require("null-ls").builtins.formatting.prettierd
-    },
-    debug = true,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        setup_keymaps_formatting(client, bufnr) 
-    end,
-})
+-- require("null-ls").setup({
+--     sources = {
+--         require("null-ls").builtins.formatting.prettierd
+--     },
+--     debug = true,
+--     on_attach = function(client, bufnr)
+--         on_attach(client, bufnr)
+--         setup_keymaps_formatting(client, bufnr) 
+--     end,
+-- })
 
 require('lspconfig')['eslint'].setup {
     filetypes = {
