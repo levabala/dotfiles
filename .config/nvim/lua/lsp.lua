@@ -21,7 +21,7 @@ local setup_keymaps = function(client, bufnr)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', 'gr', function() vim.lsp.buf.references({ includeDeclaration = false }) end, bufopts)
   vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -95,18 +95,19 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local null_ls = require("null-ls")
 
--- require("null-ls").setup({
---     sources = {
---         require("null-ls").builtins.formatting.prettierd
---     },
---     debug = true,
---     on_attach = function(client, bufnr)
---         on_attach(client, bufnr)
---         setup_keymaps_formatting(client, bufnr) 
---     end,
--- })
+null_ls.setup({
+    sources = {
+        require("null-ls").builtins.formatting.prettierd
+    },
+    debug = true,
+    log_level = "debug",
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        setup_keymaps_formatting(client, bufnr) 
+    end,
+})
 
 require('lspconfig')['eslint'].setup {
     filetypes = {
@@ -116,7 +117,6 @@ require('lspconfig')['eslint'].setup {
       'typescript',
       'typescriptreact',
       'typescript.tsx',
-      'json'
     },
     on_attach = function(client, bufnr)
         client.resolved_capabilities.document_formatting = false

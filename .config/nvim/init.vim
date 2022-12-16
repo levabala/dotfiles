@@ -21,20 +21,20 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
+" internal
+Plug 'nvim-lua/plenary.nvim'
+
 " lsp and syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/typescript.nvim'
-" Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-
-" internal
-Plug 'nvim-lua/plenary.nvim'
 
 cal plug#end()
 
@@ -55,13 +55,13 @@ let g:ale_fix_on_save = 1
 let g:ale_sign_column_always = 0
 
 " netrw
-let g:netrw_keepj=""
-let g:netrw_keepdir = 0
+" let g:netrw_keepj=""
 let g:netrw_banner = 0
 let g:netrw_winsize = 20
 let g:netrw_keepdir = 1
 let g:netrw_browse_split = 0
 let g:netrw_preview = 1
+let g:netrw_liststyle=0
 
 function! NetrwMapping()
   nmap <buffer> l <CR>
@@ -72,6 +72,8 @@ augroup netrw_mapping
   autocmd!
   autocmd filetype netrw call NetrwMapping()
 augroup END
+
+noremap ge :Rexplore<CR>
 
 " loading old-fashion .vimrc
 set runtimepath^=~/.vim runtimepath+=~/.vim/after

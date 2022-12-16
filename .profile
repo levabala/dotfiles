@@ -22,3 +22,4 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   alias brightnessctl='sudo brightnessctl'
 fi
 
+source ~/.profile_private
