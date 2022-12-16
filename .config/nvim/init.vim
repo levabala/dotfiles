@@ -1,42 +1,4 @@
-call plug#begin()
-
-" common
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" themes
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" visual
-Plug 'tanvirtin/monokai.nvim'
-Plug 'edkolev/tmuxline.vim'
-" Plug 'SmiteshP/nvim-navic'
-
-" editing
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-
-" git
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-
-" internal
-Plug 'nvim-lua/plenary.nvim'
-
-" lsp and syntax
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/typescript.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-
-cal plug#end()
+:lua require('plugins')
 
 set termguicolors
 set completeopt=menu,menuone,noselect
