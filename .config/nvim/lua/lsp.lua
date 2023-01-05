@@ -124,6 +124,20 @@ require('lspconfig')['eslint'].setup {
     end,
 }
 
+require('lspconfig').stylelint_lsp.setup{
+    filetypes = {
+      'scss',
+    },
+    settings = {
+        stylelintplus = {
+        }
+    },
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+}
+
 require("typescript").setup({
     go_to_source_definition = {
         fallback = true,
@@ -156,3 +170,5 @@ require'nvim-treesitter.configs'.setup{
     },
   },
 }
+
+require("fidget").setup{}
