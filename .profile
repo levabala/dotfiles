@@ -20,6 +20,13 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	# pnpm end
 
   alias brightnessctl='sudo brightnessctl'
+
+  setbrightness() {
+    CURRENT_DISPLAY=$(xrandr --current | grep " connected" | awk '{print $1}')
+    xrandr --output $CURRENT_DISPLAY --brightness $1
+
+    echo "set brightness $1 for display $CURRENT_DISPLAY"
+  }
 fi
 
 source ~/.profile_private
