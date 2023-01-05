@@ -35,7 +35,8 @@ augroup netrw_mapping
   autocmd filetype netrw call NetrwMapping()
 augroup END
 
-noremap ge :Rexplore<CR>
+noremap ge :Explore<CR>
+noremap gh :History<CR>
 
 " loading old-fashion .vimrc
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
