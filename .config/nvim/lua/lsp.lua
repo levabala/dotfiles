@@ -1,5 +1,7 @@
 -- local navic = require("nvim-navic")
 
+require "lsp_signature".setup({})
+
 --
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -21,7 +23,9 @@ local setup_keymaps = function(client, bufnr)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', 'gr', function() vim.lsp.buf.references({ includeDeclaration = false }) end, bufopts)
+  vim.keymap.set('n', 'gr', function() 
+    vim.lsp.buf.references({ includeDeclarations = false})
+  end, bufopts)
   vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -160,15 +164,15 @@ require'nvim-treesitter.configs'.setup{
   highlight={
     enable = true
   },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<CR>',
-      scope_incremental = '<CR>',
-      node_incremental = '<TAB>',
-      node_decremental = '<S-TAB>',
-    },
-  },
+  -- incremental_selection = {
+  --   enable = true,
+  --   keymaps = {
+  --     init_selection = '<CR>',
+  --     scope_incremental = '<CR>',
+  --     node_incremental = '<TAB>',
+  --     node_decremental = '<S-TAB>',
+  --   },
+  -- },
 }
 
 require("fidget").setup{}
