@@ -26,6 +26,8 @@ let g:netrw_preview = 1
 let g:netrw_liststyle=0
 let g:netrw_altfile = 1
 
+let g:gitblame_enabled = 0
+
 function! NetrwMapping()
   nmap <buffer> l <CR>
   nmap <buffer> h -^
