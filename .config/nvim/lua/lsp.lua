@@ -99,13 +99,16 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
     sources = {
-        require("null-ls").builtins.formatting.prettierd
+        require("null-ls").builtins.formatting.prettierd.with({
+            disabled_filetypes = { "scss" },
+        }),
+        require("null-ls").builtins.formatting.stylelint
     },
     debug = true,
     log_level = "debug",
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        setup_keymaps_formatting(client, bufnr) 
+        setup_keymaps_formatting(client, bufnr)
     end,
 })
 

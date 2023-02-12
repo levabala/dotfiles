@@ -44,8 +44,8 @@ set encoding=utf-8
 set wrap
 set textwidth=79
 set formatoptions=tcqrn1
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set softtabstop=2
 set expandtab
 set noshiftround
@@ -79,6 +79,10 @@ set t_8f=^[[38;2;%lu;%lu;%lum
 "This unsets the "last search pattern" register
 nnoremap <CR> :noh<CR><CR>
 nnoremap <ESC> :noh<CR><CR>
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP
 
 " Center cursor verically
 augroup VCenterCursor

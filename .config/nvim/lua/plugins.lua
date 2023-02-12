@@ -11,12 +11,18 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+local secret = vim.env.SECRET_RAW_PLUGIN_1
+if secret then 
+  vim.cmd('source ' .. secret)
+end
+
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  -- common
+  -- navigation
   use { 'junegunn/fzf', run = ":call fzf#install()" }
   use { 'junegunn/fzf.vim' }
+  use 'tpope/vim-vinegar'
   
   -- themes
   use 'vim-airline/vim-airline'
@@ -30,6 +36,7 @@ return require('packer').startup(function(use)
   -- editing
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
+  use 'mbbill/undotree'
   
   -- git
   use 'tpope/vim-fugitive'
@@ -53,7 +60,7 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
+  -- use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
   use 'j-hui/fidget.nvim'
 
@@ -63,3 +70,4 @@ return require('packer').startup(function(use)
     require('packer').sync()
   end
 end)
+

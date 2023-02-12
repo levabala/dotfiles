@@ -8,8 +8,11 @@
 alias ls='ls --color=auto'
 alias vim='nvim'
 
-# fzf ignore node_modules and .git
-export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!{node_modules/*,.git/*,dist/*,.build/*,.build_cache/*}" -g "!**/*.{gz,lock,png,yml}" --dfa-size-limit 1G'
+# export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!{node_modules/*,.git/*,dist/*,.build/*,.build_cache/*}" -g "!**/*.{gz,lock,png,yml}" --dfa-size-limit 1G'
+export FZF_DEFAULT_COMMAND='fd --type f'
+
+export GOPATH=$HOME/gocode
+export PATH=$PATH:$GOPATH/bin
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export PATH="$PATH:$(yarn global bin)"
