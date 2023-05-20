@@ -33,8 +33,6 @@ return require('packer').startup(function(use)
       'nvim-tree/nvim-web-devicons',
     },
   }
-  use 'ggandor/leap.nvim'
-  use 'ThePrimeagen/harpoon'
   use {
     'stevearc/oil.nvim',
     config = function() require('oil').setup() end
@@ -73,6 +71,11 @@ return require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
   
   -- lsp and syntax
+  use {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      run = ":MasonUpdate" -- :MasonUpdate updates registry contents
+  }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()

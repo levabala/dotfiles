@@ -1,4 +1,5 @@
--- local navic = require("nvim-navic")
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 require "lsp_signature".setup({})
 require('oil').setup({
@@ -101,10 +102,9 @@ local setup_keymaps = function(client, bufnr)
 end
 
 local setup_keymaps_formatting = function(client, bufnr)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-  vim.keymap.set('v', '<space>f', vim.lsp.buf.format, bufopts)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
 
-  -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
 end
 
 local on_attach = function(client, bufnr)
@@ -175,7 +175,8 @@ null_ls.setup({
         require("null-ls").builtins.formatting.prettierd.with({
             disabled_filetypes = { "scss" },
         }),
-        require("null-ls").builtins.formatting.stylelint
+        require("null-ls").builtins.formatting.stylelint,
+        require("null-ls").builtins.formatting.stylua,
     },
     debug = true,
     log_level = "debug",
@@ -203,7 +204,6 @@ require('lspconfig')['eslint'].setup {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-enablePoints={false}
 require'lspconfig'.cssls.setup{
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -245,9 +245,23 @@ require'lspconfig'.lua_ls.setup{
         client.server_capabilities.documentFormattingProvider = false
         on_attach(client, bufnr)
     end,
+    settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' },
+          },
+        }
+      }
 }
 
 require'lspconfig'.rust_analyzer.setup{
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+}
+
+require'lspconfig'.clangd.setup{
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         on_attach(client, bufnr)
@@ -268,45 +282,15 @@ require'nvim-treesitter.configs'.setup{
   autotag = {
     enable = true,
   },
-  -- incremental_selection = {
-  --   enable = true,
-  --   keymaps = {
-  --     init_selection = '<CR>',
-  --     scope_incremental = '<CR>',
-  --     node_incremental = '<TAB>',
-  --     node_decremental = '<S-TAB>',
-  --   },
-  -- },
 }
 
 -- TODO: move to other file
 require("fidget").setup{}
-require('leap').add_default_mappings()
-require("harpoon").setup({
-  menu = {
-    width = vim.api.nvim_win_get_width(0) - 24,
-  }
-})
 require("symbols-outline").setup({
     show_relative_numbers = true,
     autofold_depth = 1,
 })
 
--- harpoon start
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
-
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-vim.keymap.set("n", "<C-l>", ui.select_menu_item)
-
-vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua require("harpoon.ui").nav_file(vim.v.count1)<cr>',  opts)
--- harpoon end
-
 vim.keymap.set("n", "gl", vim.diagnostic.setqflist)
 vim.api.nvim_set_keymap('n', '<leader>s', '<cmd>SymbolsOutline<cr>',  opts)
 
--- require("nvim-tree").setup()
--- require('toggle_lsp_diagnostics').init({
---     -- somehow disable update_in_insert?
--- })
