@@ -3,7 +3,6 @@
 set termguicolors
 set completeopt=menu,menuone,noselect
 
-" let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 let g:fzf_preview_window = []
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" --dfa-size-limit 1G
@@ -14,10 +13,6 @@ let mapleader = " "
 
 nnoremap <leader>j :Rg<cr>
 nnoremap <leader>k :Files<cr>
-
-" let g:airline_statusline_ontop = 1
-" let g:airline_stl_path_style = 'short'
-" let g:airline_section_c = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 let g:vim_markdown_folding_disabled = 1
 

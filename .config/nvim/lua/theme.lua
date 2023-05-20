@@ -1,8 +1,7 @@
-local monokai = require('monokai')
-local palette = monokai.classic
-monokai.setup {
+local monokai = require("monokai")
+monokai.setup({
     palette = {
-        base5 = '#7e868c',
+        base5 = "#7e868c",
     },
     italics = false,
-}
+})
