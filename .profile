@@ -41,8 +41,16 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   }
 fi
 
-source ~/.profile_private
-. "$HOME/.cargo/env"
+PROFILE_PRIVATE=~/.profile_private
+if [ -f "$PROFILE_PRIVATE" ]; then 
+  source $PROFILE_PRIVATE
+fi
+
+CARGO_ENV=$HOME/.cargo/env
+if [ -f "$CARGO_ENV" ]; then
+  echo lol
+    . "$CARGO_ENV"
+fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
