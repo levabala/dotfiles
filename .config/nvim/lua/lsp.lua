@@ -1,6 +1,67 @@
 -- local navic = require("nvim-navic")
 
 require "lsp_signature".setup({})
+require('oil').setup({
+    keymaps = {
+        ["g?"] = "actions.show_help",
+        ["<C-l>"] = "actions.select",
+        ["<C-p>"] = "actions.preview",
+        ["<C-c>"] = "actions.close",
+        ["<C-j>"] = "actions.refresh",
+        ["<C-h>"] = "actions.parent",
+        ["_"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        ["g."] = "actions.toggle_hidden",
+    },
+    use_default_keymaps = false,
+    skip_confirm_for_simple_edits = true,
+})
+
+local function filter(arr, fn)
+  if type(arr) ~= "table" then
+    return arr
+  end
+
+  local filtered = {}
+  for k, v in pairs(arr) do
+    if fn(v, k, arr) then
+      table.insert(filtered, v)
+    end
+  end
+
+  return filtered
+end
+
+local function filterNodeModules(value)
+  return string.match(value.filename, 'node_modules') == nil
+end
+
+local function filterNotAutoImport(value)
+    print("here i am")
+    print(vim.inspect(value))
+  return string.match(value.filename, 'Add import') ~= nil
+end
+
+local function on_list(options, filterFunc, forceOpen)
+  local items = options.items
+  if #items > 1 then
+    items = filter(items, filterFunc)
+  end
+
+  vim.fn.setqflist({}, ' ', { title = options.title, items = items, context = options.context })
+
+  local mode = (#items > 1 or forceOpen) and 'copen' or 'cfirst'
+  vim.api.nvim_command(mode)
+end
+
+local function on_list_node_modules(options)
+    return on_list(options, filterNodeModules)
+end
+
+local function on_list_not_auto_import(options)
+    return on_list(options, filterNotAutoImport, true)
+end
 
 --
 -- Mappings.
@@ -20,8 +81,8 @@ local setup_keymaps = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'gD', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition{on_list=on_list_node_modules} end, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', 'gr', function() 
     vim.lsp.buf.references({ includeDeclarations = false})
@@ -36,10 +97,12 @@ local setup_keymaps = function(client, bufnr)
   end, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<space>ci', function() vim.lsp.buf.code_action{on_list=on_list_not_auto_import} end, bufopts)
 end
 
 local setup_keymaps_formatting = function(client, bufnr)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('v', '<space>f', vim.lsp.buf.format, bufopts)
 
   -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
@@ -58,6 +121,12 @@ local lsp_flags = {
 local cmp = require'cmp'
 
 cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+    end,
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -131,6 +200,18 @@ require('lspconfig')['eslint'].setup {
     end,
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+enablePoints={false}
+require'lspconfig'.cssls.setup{
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+}
+
 require('lspconfig').stylelint_lsp.setup{
     filetypes = {
       'scss',
@@ -156,8 +237,22 @@ require("typescript").setup({
         end,
         flags = lsp_flags,
     },
-    capabilities = capabilities 
+    capabilities = capabilities
 })
+
+require'lspconfig'.lua_ls.setup{
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+}
+
+require'lspconfig'.rust_analyzer.setup{
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+}
 
 -- TODO: move outside lsp.lua?
 require'nvim-treesitter.configs'.setup{
@@ -166,6 +261,12 @@ require'nvim-treesitter.configs'.setup{
   },
   highlight={
     enable = true
+  },
+  context_commentstring = {
+    enable = true
+  },
+  autotag = {
+    enable = true,
   },
   -- incremental_selection = {
   --   enable = true,
@@ -178,4 +279,34 @@ require'nvim-treesitter.configs'.setup{
   -- },
 }
 
+-- TODO: move to other file
 require("fidget").setup{}
+require('leap').add_default_mappings()
+require("harpoon").setup({
+  menu = {
+    width = vim.api.nvim_win_get_width(0) - 24,
+  }
+})
+require("symbols-outline").setup({
+    show_relative_numbers = true,
+    autofold_depth = 1,
+})
+
+-- harpoon start
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>a", mark.add_file)
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+vim.keymap.set("n", "<C-l>", ui.select_menu_item)
+
+vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua require("harpoon.ui").nav_file(vim.v.count1)<cr>',  opts)
+-- harpoon end
+
+vim.keymap.set("n", "gl", vim.diagnostic.setqflist)
+vim.api.nvim_set_keymap('n', '<leader>s', '<cmd>SymbolsOutline<cr>',  opts)
+
+-- require("nvim-tree").setup()
+-- require('toggle_lsp_diagnostics').init({
+--     -- somehow disable update_in_insert?
+-- })

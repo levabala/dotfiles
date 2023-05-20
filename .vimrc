@@ -67,6 +67,8 @@ set clipboard+=unnamedplus
 set t_vb=
 set tw=0
 
+set signcolumn=yes
+
 
 " TRUE COLOR
 set t_8b=^[[48;2;%lu;%lu;%lum
@@ -77,8 +79,8 @@ set t_8f=^[[38;2;%lu;%lu;%lum
 :set nu rnu
 
 "This unsets the "last search pattern" register
-nnoremap <CR> :noh<CR><CR>
-nnoremap <ESC> :noh<CR><CR>
+nnoremap <silent> <CR> :noh<CR><CR>
+nnoremap <silent> <ESC> :noh<CR>
 
 " replace currently selected text with default register
 " without yanking it
