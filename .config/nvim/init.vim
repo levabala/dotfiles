@@ -6,7 +6,7 @@ set completeopt=menu,menuone,noselect
 let g:fzf_preview_window = []
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" --dfa-size-limit 1G
-  \ -g "!*.{zip}" 
+  \ -g "!*.{zip}"
   \ -g "!{.git,node_modules,build}/*" '
 
 let mapleader = " "
@@ -51,7 +51,7 @@ function! NetrwRemoveRecursive()
     cnoremap <buffer> <CR> rm -r<CR>
     normal mu
     normal mf
-    
+
     try
       normal mx
     catch
