@@ -64,6 +64,9 @@ return require("packer").startup(function(use)
     })
     use("wfxr/minimap.vim")
     use("tpope/vim-sleuth")
+    use("takac/vim-hardtime")
+    use("napmn/react-extract.nvim")
+    use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
 
     -- git
     use("tpope/vim-fugitive")

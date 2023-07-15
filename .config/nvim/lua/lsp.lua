@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup()
-
+require("react-extract").setup()
 require("lsp_signature").setup({})
 require("oil").setup({
     keymaps = {
@@ -17,6 +17,16 @@ require("oil").setup({
     },
     use_default_keymaps = false,
     skip_confirm_for_simple_edits = true,
+})
+require("no-neck-pain").setup({
+    width = 110,
+    autocmds = {
+        enableOnVimEnter = true,
+    },
+    mappings = {
+        enabled = true,
+        toggle = "<Leader>a",
+    },
 })
 
 local function filter(arr, fn)
@@ -109,6 +119,7 @@ local setup_keymaps_formatting = function(client, bufnr)
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
     vim.keymap.set("n", "<space>f", vim.lsp.buf.format, bufopts)
+    vim.keymap.set("v", "<space>f", vim.lsp.buf.format, bufopts)
 end
 
 local on_attach = function(client, bufnr)
@@ -298,3 +309,6 @@ require("symbols-outline").setup({
 
 vim.keymap.set("n", "gl", vim.diagnostic.setqflist)
 vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>SymbolsOutline<cr>", opts)
+
+vim.keymap.set({ "v" }, "<Leader>re", require("react-extract").extract_to_new_file)
+vim.keymap.set({ "v" }, "<Leader>rc", require("react-extract").extract_to_current_file)

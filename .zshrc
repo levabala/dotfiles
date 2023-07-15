@@ -48,6 +48,13 @@ function grepdiff() {
     (cd ~/arcadia && arc diff --name-only trunk | xargs rg $@)
 }
 
+remind() {
+    seconds=$(echo "$1 * 60" | bc)
+    echo "remind notification in $seconds seconds"
+    sleep $seconds
+    osascript -e 'display notification "'"$1 minute timer complete"'" with title "Ding!"'
+}
+
 alias arm="arch -arm64 zsh"
 alias intel="arch -x86_64 zsh"
 

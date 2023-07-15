@@ -14,6 +14,14 @@ let mapleader = " "
 nnoremap <leader>j :Rg<cr>
 nnoremap <leader>k :Files<cr>
 
+let g:hardtime_default_on = 1
+let g:hardtime_allow_different_key = 1
+let g:hardtime_maxcount = 3
+let g:hardtime_motion_with_count_resets = 1
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_ignore_buffer_patterns = [ "oil.*" ]
+let g:hardtime_showmsg = 1
+
 let g:vim_markdown_folding_disabled = 1
 
 let g:ale_fixers = ['prettier', 'eslint']
