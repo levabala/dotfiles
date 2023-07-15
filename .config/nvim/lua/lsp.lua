@@ -191,6 +191,7 @@ null_ls.setup({
             disabled_filetypes = { "scss" },
         }),
         require("null-ls").builtins.formatting.stylelint,
+        require("null-ls").builtins.formatting.clang_format,
         require("null-ls").builtins.formatting.stylua.with({
             extra_args = { "--indent-type", "Spaces" },
         }),
@@ -277,11 +278,13 @@ require("lspconfig").rust_analyzer.setup({
     end,
 })
 
+capabilities.offsetEncoding = { "utf-16" }
 require("lspconfig").clangd.setup({
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         on_attach(client, bufnr)
     end,
+    capabilities = capabilities
 })
 
 -- TODO: move outside lsp.lua?
