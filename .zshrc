@@ -25,6 +25,8 @@ export CS_WSVN=on
 
 export GEM_HOME="$HOME/.gems"
 
+ed() { command ed -p\* "$@" ; }
+
 # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -38,6 +40,8 @@ else
     nvm_path="$HOME/.nvm"
 fi
 
+export PATH="${PATH}:/Users/levabala/scripts/chatgpt.sh"
+
 export PATH="${brew_path}:${PATH}"
 export PATH="/Users/levabala/Library/Python/3.9/bin:${PATH}"
 export NVM_DIR="${nvm_path}"
@@ -50,7 +54,8 @@ function grepdiff() {
 
 remind() {
     seconds=$(echo "$1 * 60" | bc)
-    echo "remind notification in $seconds seconds"
+    timeStr=$(gdate -d@$seconds -u +%H:%M:%S)
+    echo "remind notification in $timeStr"
     sleep $seconds
     osascript -e 'display notification "'"$1 minute timer complete"'" with title "Ding!"'
 }
@@ -58,9 +63,27 @@ remind() {
 alias arm="arch -arm64 zsh"
 alias intel="arch -x86_64 zsh"
 
+function arcfixupsquash() {
+    arc commit --fixup $1 && arc rebase --autosquash $1^
+}
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.gems/bin"
 
 fpath+=~/.zfunc
 autoload -Uz compinit
 compinit -C
+
+# The next line updates PATH for Yandex Cloud CLI.
+if [ -f '/Users/levabala/yandex-cloud/path.bash.inc' ]; then source '/Users/levabala/yandex-cloud/path.bash.inc'; fi
+
+# The next line enables shell command completion for yc.
+if [ -f '/Users/levabala/yandex-cloud/completion.zsh.inc' ]; then source '/Users/levabala/yandex-cloud/completion.zsh.inc'; fi
+
+
+# bun completions
+[ -s "/Users/levabala/.bun/_bun" ] && source "/Users/levabala/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

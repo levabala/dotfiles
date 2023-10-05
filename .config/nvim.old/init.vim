@@ -127,5 +127,11 @@ vnoremap <leader>p "_dP
 " increase oldfiles limit
 set shada=!,'200,<150,s10,h
 
+nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j'
+
+
+nnoremap <leader>te <cmd>TypescriptRemoveUnused<cr><cmd>EslintFixAll<cr> 
+
 :lua require('theme')
 :lua require('lsp')

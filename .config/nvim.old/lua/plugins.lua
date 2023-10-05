@@ -39,6 +39,7 @@ return require("packer").startup(function(use)
             require("oil").setup()
         end,
     })
+    use({ "inkarkat/vim-EnhancedJumps", requires = "inkarkat/vim-ingo-library" })
 
     -- themes
     use("vim-airline/vim-airline")
@@ -67,6 +68,7 @@ return require("packer").startup(function(use)
     use("takac/vim-hardtime")
     use("napmn/react-extract.nvim")
     use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
+    use("bronson/vim-visual-star-search")
 
     -- git
     use("tpope/vim-fugitive")

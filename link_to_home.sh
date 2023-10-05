@@ -1,5 +1,5 @@
 createLink() {
-  RELATIVE_PATH=$(realpath --relative-to=$HOME/.dotfiles $0)
+  RELATIVE_PATH=$(grealpath --relative-to=$HOME/.dotfiles $0)
   echo $RELATIVE_PATH
   mkdir -p $HOME/$(dirname $RELATIVE_PATH)
   mkdir -p $HOME/.dotfiles_backup/$(dirname $RELATIVE_PATH)
@@ -8,4 +8,4 @@ createLink() {
 }
 export -f createLink
 
-find $HOME/.dotfiles/ -type f ! -path "$HOME/.dotfiles/.git/*" ! -path "$HOME/.dotfiles/**/*.backup" -exec sh -c 'createLink "$0"' {} \;
+find $HOME/.dotfiles -type f ! -path "$HOME/.dotfiles/.git/*" ! -path "$HOME/.dotfiles/**/*.backup" -exec sh -c 'createLink "$0"' {} \;
