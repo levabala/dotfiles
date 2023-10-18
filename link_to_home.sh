@@ -1,5 +1,10 @@
 createLink() {
-  RELATIVE_PATH=$(grealpath --relative-to=$HOME/.dotfiles $0)
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    RELATIVE_PATH=$(grealpath --relative-to=$HOME/.dotfiles $0)
+  else 
+    RELATIVE_PATH=$(realpath --relative-to=$HOME/.dotfiles $0)
+  fi
+
   echo $RELATIVE_PATH
   mkdir -p $HOME/$(dirname $RELATIVE_PATH)
   mkdir -p $HOME/.dotfiles_backup/$(dirname $RELATIVE_PATH)
