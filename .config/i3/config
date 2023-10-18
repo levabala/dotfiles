@@ -198,4 +198,12 @@ exec xss-lock --transfer-sleep-lock -- i3lock --nofork
 bindsym Print exec flameshot gui
 bindsym $mod+Shift+p exec i3lock && sleep 5 && xset dpms force off
 
-exec_always "xrandr  --dpi 132  --output DP-0 --off  --output DP-1 --off  --output DP-2 --off  --output DP-3 --off  --output HDMI-0 --off  --output DP-4 --mode 1920x1080 --rate 144 --pos 0x0 --primary"
+# save all workspace layouts
+bindsym $mod+grave exec "i3-msg -t get_workspaces | sed 's/},{/\n/g' | awk -F, '{print $3}' | awk -F: '{print $2}' | xargs -n1 i3-resurrect save -w"
+
+# restore all workspaces and windows
+bindsym $mod+shift+grave exec "i3-resurrect ls | sed -n '/programs/!p' | awk '{print $2}' | xargs -n1 i3-resurrect restore -w"
+
+# exec_always "xrandr  --dpi 132  --output DP-0 --off  --output DP-1 --off  --output DP-2 --off  --output DP-3 --off  --output HDMI-0 --off  --output DP-4 --mode 1920x1080 --rate 144 --pos 0x0 --primary"
+exec_always "xrandr --output HDMI-0 --mode 2560x1440 --rate 143.86 --output DP-4 --off"
+exec_always "picom -b"
