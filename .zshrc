@@ -25,6 +25,10 @@ export CS_WSVN=on
 
 export GEM_HOME="$HOME/.gems"
 
+function ya() {
+    /Users/levabala/arcadia/ya "$@"
+}
+
 ed() { command ed -p\* "$@" ; }
 
 # Set PATH, MANPATH, etc., for Homebrew.

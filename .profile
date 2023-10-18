@@ -15,10 +15,6 @@ export GOPATH=$HOME/gocode
 export PATH=$PATH:$GOPATH/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
-function ya() {
-    /Users/levabala/arcadia/ya "$@"
-}
-
 function f() {
     ya tool cs "$@"
 }
