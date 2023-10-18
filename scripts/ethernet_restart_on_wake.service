@@ -1,0 +1,11 @@
+[Unit]
+Description=Restart eno1 interface on wake up
+# After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+After=hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+ExecStart=/usb/bin/sudo /bin/bash -c 'sudo ip link set eno1 down && sudo ip link set eno1 up'
+
+[Install]
+# WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+WantedBy=hibernate.target hybrid-sleep.target suspend-then-hibernate.target
