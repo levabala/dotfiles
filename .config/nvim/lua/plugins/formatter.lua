@@ -24,6 +24,9 @@ return {
 			logging = true,
 			log_level = vim.log.levels.WARN,
 			filetype = {
+				rust = {
+					require("formatter.filetypes.rust").rustfmt,
+				},
 				lua = {
 					require("formatter.filetypes.lua").stylua,
 				},
