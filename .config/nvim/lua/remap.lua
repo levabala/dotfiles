@@ -29,10 +29,30 @@ vim.cmd([[ nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'k' ]])
 vim.cmd([[ nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'j' ]])
 
 -- vim.keymap.set("n", "<leader>te", "<CMD>TSToolsRemoveUnusedImports sync<CR><CMD>EslintFixAll<CR>")
-vim.keymap.set("n", "<leader>te", "<CMD>TypescriptRemoveUnused!<CR><CMD>EslintFixAll<CR><CMD>TypescriptRemoveUnused!<CR>")
+vim.keymap.set(
+	"n",
+	"<leader>te",
+	"<CMD>TypescriptRemoveUnused!<CR><CMD>EslintFixAll<CR><CMD>TypescriptRemoveUnused!<CR>"
+)
 
 -- This unsets the "last search pattern" register
 vim.keymap.set("n", "<CR>", ":noh<CR><CR>", { silent = true })
 vim.keymap.set("n", "<ESC>", ":noh<CR>", { silent = true })
 
+-- mirror <C-6>
 vim.keymap.set("n", "<C-j>", "<C-^>", { silent = true })
+
+-- disable auto formatting when pasting in insert mode
+vim.keymap.set("i", "<C-r>", "<C-r><C-o>", { silent = true })
+
+-- diff shortcut
+vim.keymap.set("n", "<leader>gd", ":SignifyDiff<CR>", { silent = true })
+
+-- tab close shortcut
+vim.keymap.set("n", "<leader>tc", ":tabc<CR>", { silent = true })
+
+-- eslint shortcut
+vim.keymap.set("n", "<leader>ge", ":EslintFixAll<CR>", { silent = true })
+
+-- insert mode copy current word
+vim.keymap.set("i", "<C-y>", "<ESC>yiw ea", { silent = true })

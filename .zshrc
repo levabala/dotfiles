@@ -25,10 +25,6 @@ export CS_WSVN=on
 
 export GEM_HOME="$HOME/.gems"
 
-function ya() {
-    /Users/levabala/arcadia/ya "$@"
-}
-
 ed() { command ed -p\* "$@" ; }
 
 # Set PATH, MANPATH, etc., for Homebrew.
@@ -61,7 +57,7 @@ remind() {
     timeStr=$(gdate -d@$seconds -u +%H:%M:%S)
     echo "remind notification in $timeStr"
     sleep $seconds
-    osascript -e 'display notification "'"$1 minute timer complete"'" with title "Ding!"'
+    osascript -e 'display notification "'"$1 secs passed. $2"'" with title "Ding!"'
 }
 
 alias arm="arch -arm64 zsh"
@@ -91,3 +87,10 @@ if [ -f '/Users/levabala/yandex-cloud/completion.zsh.inc' ]; then source '/Users
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk17-zulu/Contents/Home
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$HOME/bin

@@ -38,3 +38,7 @@ vim.cmd([[
 	au VimEnter * silent !xkblayout-state set 0
 	au InsertLeave * silent !xkblayout-state set 0
 ]])
+
+vim.cmd([[
+	au VimEnter * Copilot disable
+]])

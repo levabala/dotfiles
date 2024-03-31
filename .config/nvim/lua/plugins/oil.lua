@@ -17,9 +17,11 @@ return {
 					["`"] = "actions.cd",
 					["~"] = "actions.tcd",
 					["g."] = "actions.toggle_hidden",
+					["g\\"] = "actions.toggle_trash",
 				},
 				use_default_keymaps = false,
 				skip_confirm_for_simple_edits = true,
+				delete_to_trash = true,
 			})
 
 			vim.keymap.set("n", "ge", ":Oil<CR>")

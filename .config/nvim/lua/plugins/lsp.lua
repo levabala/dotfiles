@@ -125,11 +125,21 @@ return {
 			vim.keymap.set("n", "<leader>e", function()
 				vim.diagnostic.open_float({ focusable = true })
 			end, opts)
-			vim.keymap.set("n", "[d", function()
+			vim.keymap.set("n", "[D", function()
 				vim.diagnostic.goto_next()
 			end, opts)
-			vim.keymap.set("n", "]d", function()
+			vim.keymap.set("n", "]D", function()
 				vim.diagnostic.goto_prev()
+			end, opts)
+			vim.keymap.set("n", "[d", function()
+				vim.diagnostic.goto_next({
+				   severity = vim.diagnostic.severity.ERROR,
+				})
+			end, opts)
+			vim.keymap.set("n", "]d", function()
+				vim.diagnostic.goto_prev({
+				   severity = vim.diagnostic.severity.ERROR,
+				})
 			end, opts)
 			vim.keymap.set("n", "<leader>ca", function()
 				vim.lsp.buf.code_action()

@@ -3,4 +3,5 @@ return {
 	init = function()
 		require("autoclose").setup()
 	end,
+	enabled = false
 }

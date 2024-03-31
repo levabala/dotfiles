@@ -1,8 +1,7 @@
 return {
 	"mhartington/formatter.nvim",
 	init = function()
-		local util = require "formatter.util"
-		local defaults = require "formatter.defaults"
+		local util = require("formatter.util")
 
 		local prettierd = function()
 			return {
@@ -53,6 +52,9 @@ return {
 				},
 				go = {
 					gofumpt,
+				},
+				json = {
+					prettierd,
 				},
 			},
 		})
