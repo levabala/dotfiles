@@ -1,0 +1,13 @@
+[font]
+size = 18.0
+
+[font.normal]
+family = "Menlo Nerd Font"
+
+[[keyboard.bindings]]
+chars = "\u001E"
+key = "Key6"
+mods = "Control"
+
+[window]
+decorations = "none"
