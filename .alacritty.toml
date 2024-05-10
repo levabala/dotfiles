@@ -2,7 +2,7 @@
 size = 18.0
 
 [font.normal]
-family = "Menlo Nerd Font"
+family = "MesloLGS Nerd Font"
 
 [[keyboard.bindings]]
 chars = "\u001E"
