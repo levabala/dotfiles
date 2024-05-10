@@ -70,7 +70,7 @@ return {
 		end,
 		lazy = false,
 		priority = 1000, -- make sure to load this before all the other start plugins
-		enabled = true,
+		enabled = false,
 	},
 	{
 		"tanvirtin/monokai.nvim",
@@ -85,5 +85,19 @@ return {
 		lazy = false,
 		priority = 1000, -- make sure to load this before all the other start plugins
 		enabled = false,
+	},
+	{
+		"loctvl842/monokai-pro.nvim",
+		init = function()
+			require("monokai-pro").setup({
+				filter = "ristretto",
+				terminal_colors = true
+			})
+
+			vim.cmd([[colorscheme monokai-pro]])
+		end,
+		lazy = false,
+		priority = 1000, -- make sure to load this before all the other start plugins
+		enabled = true,
 	},
 }

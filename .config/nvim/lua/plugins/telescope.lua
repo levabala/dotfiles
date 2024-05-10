@@ -38,11 +38,8 @@ return {
 				path_display = { "truncate" },
 				preview = false,
 				mappings = {
-					n = {
-						["<C-q>"] = function(bufnr)
-							actions.smart_send_to_qflist(bufnr)
-							builtin.quickfix()
-						end,
+					i = {
+						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 					},
 				},
 			},
