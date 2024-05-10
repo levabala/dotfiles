@@ -19,6 +19,14 @@ return {
 			}
 		end
 
+		local racofmt = function()
+			return {
+				exe = "raco fmt",
+				args = { util.escape_path(util.get_current_buffer_file_path()) },
+				stdin = true,
+			}
+		end
+
 		require("formatter").setup({
 			logging = true,
 			log_level = vim.log.levels.WARN,
@@ -55,6 +63,9 @@ return {
 				},
 				json = {
 					prettierd,
+				},
+				racket = {
+					racofmt,
 				},
 			},
 		})

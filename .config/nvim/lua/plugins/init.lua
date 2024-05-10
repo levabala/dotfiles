@@ -7,4 +7,6 @@ return {
 	{ "bronson/vim-visual-star-search" },
 	{ "edkolev/tmuxline.vim" },
 	{ "windwp/nvim-ts-autotag" },
+	{ "wlangstroth/vim-racket" },
+	{ "jez/vim-better-sml" },
 }
