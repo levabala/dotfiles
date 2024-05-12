@@ -17,6 +17,7 @@ return {
 		arg = leet_arg,
 		lang = "typescript",
 		theme = {
+			["normal"] = {},
 		},
 	},
 }

@@ -63,22 +63,23 @@ return {
 	{
 		"sainnhe/sonokai",
 		init = function()
-			vim.g.sonokai_style = "espresso"
+			-- vim.g.sonokai_style = "espresso"
 			-- vim.g.sonokai_style = "maia"
-			-- vim.g.sonokai_style = "shusia"
+			vim.g.sonokai_style = "shusia"
 			vim.cmd([[colorscheme sonokai]])
 		end,
 		lazy = false,
 		priority = 1000, -- make sure to load this before all the other start plugins
-		enabled = false,
+		enabled = true,
 	},
 	{
 		"tanvirtin/monokai.nvim",
 		init = function()
 			require("monokai").setup({
-				palette = {
-					base2 = "#302c2b",
-				},
+				-- palette = {
+				-- 	base2 = "#302c2b",
+				-- },
+				palette = require('monokai').ristretto,
 				italics = false,
 			})
 		end,
@@ -98,6 +99,6 @@ return {
 		end,
 		lazy = false,
 		priority = 1000, -- make sure to load this before all the other start plugins
-		enabled = true,
+		enabled = false,
 	},
 }
