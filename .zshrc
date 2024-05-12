@@ -98,3 +98,4 @@ export PATH=$PATH:$HOME/bin
 
 export PATH=$PATH:/Applications/Racket\ v8.12/bin
 export PATH=/usr/local/smlnj/bin:"$PATH"
+export PRETTIERD_LOCAL_PRETTIER_ONLY=$HOME/.prettierrc.json
