@@ -1,6 +1,6 @@
 return {
 	"VonHeikemen/lsp-zero.nvim",
-	branch = "v1.x",
+	branch = "v3.x",
 	dependencies = {
 		-- LSP Support
 		{ "neovim/nvim-lspconfig" },
@@ -34,10 +34,7 @@ return {
 			["<C-Space>"] = cmp.mapping.complete(),
 		})
 
-		-- cmp_mappings['<Tab>'] = nil
-		-- cmp_mappings['<S-Tab>'] = nil
-
-		lsp.setup_nvim_cmp({
+		cmp.setup({
 			mapping = cmp_mappings,
 			sorting = {
 				comparators = {
@@ -86,8 +83,6 @@ return {
 		end
 
 		local function filterNotAutoImport(value)
-			print("here i am")
-			print(vim.inspect(value))
 			return string.match(value.filename, "Add import") ~= nil
 		end
 
@@ -133,12 +128,12 @@ return {
 			end, opts)
 			vim.keymap.set("n", "[d", function()
 				vim.diagnostic.goto_next({
-				   severity = vim.diagnostic.severity.ERROR,
+					severity = vim.diagnostic.severity.ERROR,
 				})
 			end, opts)
 			vim.keymap.set("n", "]d", function()
 				vim.diagnostic.goto_prev({
-				   severity = vim.diagnostic.severity.ERROR,
+					severity = vim.diagnostic.severity.ERROR,
 				})
 			end, opts)
 			vim.keymap.set("n", "<leader>ca", function()
@@ -161,19 +156,33 @@ return {
 			end, opts)
 		end)
 
+		require("mason").setup({})
+		require("mason-lspconfig").setup({
+			ensure_installed = {},
+			handlers = {
+				function(server_name)
+					require("lspconfig")[server_name].setup({})
+				end,
+			},
+		})
+
 		-- snippets
 		local ls = require("luasnip")
 
-		vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-		vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-		vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+		vim.keymap.set({ "i" }, "<C-K>", function()
+			ls.expand()
+		end, { silent = true })
+		vim.keymap.set({ "i", "s" }, "<C-L>", function()
+			ls.jump(1)
+		end, { silent = true })
+		vim.keymap.set({ "i", "s" }, "<C-J>", function()
+			ls.jump(-1)
+		end, { silent = true })
 
-		vim.keymap.set({"i", "s"}, "<C-E>", function()
+		vim.keymap.set({ "i", "s" }, "<C-E>", function()
 			if ls.choice_active() then
 				ls.change_choice(1)
 			end
-		end, {silent = true})
-
-		lsp.setup()
+		end, { silent = true })
 	end,
 }
