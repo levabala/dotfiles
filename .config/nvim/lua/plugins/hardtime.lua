@@ -9,4 +9,5 @@ return {
 		vim.g.hardtime_ignore_buffer_patterns = { "oil.*" }
 		vim.g.hardtime_showmsg = 1
 	end,
+	enabled = false,
 }

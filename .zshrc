@@ -98,4 +98,7 @@ export PATH=$PATH:$HOME/bin
 
 export PATH=$PATH:/Applications/Racket\ v8.12/bin
 export PATH=/usr/local/smlnj/bin:"$PATH"
-export PRETTIERD_LOCAL_PRETTIER_ONLY=$HOME/.prettierrc.json
+export PRETTIERD_DEFAULT_CONFIG=$HOME/.prettierrc.json
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

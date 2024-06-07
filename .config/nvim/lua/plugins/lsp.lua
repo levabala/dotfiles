@@ -163,6 +163,9 @@ return {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
 				end,
+
+				-- ts is handled by typescript-tools plugin
+				tsserver = lsp.noop,
 			},
 		})
 
