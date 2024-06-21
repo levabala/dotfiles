@@ -31,10 +31,18 @@ return {
 			["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
 			["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
 			["<C-l>"] = cmp.mapping.confirm({ select = true }),
+			["<CR>"] = cmp.mapping.confirm({ select = true }),
 			["<C-Space>"] = cmp.mapping.complete(),
 		})
 
 		cmp.setup({
+			sources = {
+				{ name = 'nvim_lsp' },
+				{ name = 'nvim_lua' },
+		        { name = 'luasnip' },
+				{ name = 'path' },
+				{ name = 'buffer' },
+			},
 			mapping = cmp_mappings,
 			sorting = {
 				comparators = {
@@ -145,7 +153,7 @@ return {
 			vim.keymap.set("n", "<space>ci", function()
 				vim.lsp.buf.code_action({ on_list = on_list_not_auto_import })
 			end, bufopts)
-			vim.keymap.set("n", "<leader>gr", function()
+			vim.keymap.set("n", "gr", function()
 				vim.lsp.buf.references()
 			end, opts)
 			vim.keymap.set("n", "<leader>rn", function()
@@ -187,5 +195,11 @@ return {
 				ls.change_choice(1)
 			end
 		end, { silent = true })
+
+		require("typescript-tools").setup {
+			settings = {
+				separate_diagnostic_server = true,
+			}
+		}
 	end,
 }

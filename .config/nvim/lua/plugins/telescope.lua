@@ -47,6 +47,9 @@ return {
 
 		vim.keymap.set("n", "<leader>k", builtin.find_files, {})
 		vim.keymap.set("n", "<leader>j", extensions.live_grep_args.live_grep_args, {})
+		vim.keymap.set("n", "<leader>l", function()
+			builtin.live_grep({ grep_open_files = true })
+		end, {})
 		vim.keymap.set("n", "<leader>s", builtin.lsp_document_symbols, {})
 		vim.keymap.set("n", "gb", builtin.buffers, {})
 		vim.keymap.set("n", "gt", builtin.help_tags, {})

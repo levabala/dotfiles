@@ -4,17 +4,13 @@ return {
 	init = function()
 		require("nvim-treesitter.configs").setup({
 			indent = {
-				enable = true,
+				enable = false,
 			},
 			highlight = {
 				enable = true,
 			},
 			context_commentstring = {
 				enable = true,
-			},
-			autotag = {
-				enable = true,
-				enable_close_on_slash = false,
 			},
 			textobjects = {
 				select = {

@@ -71,5 +71,6 @@ return {
 		})
 
 		vim.keymap.set("n", "<leader>f", ":Format<CR>", { silent = true })
+		vim.keymap.set("v", "<leader>f", ":Format<CR>", { silent = true })
 	end,
 }
