@@ -37,11 +37,11 @@ return {
 
 		cmp.setup({
 			sources = {
-				{ name = 'nvim_lsp' },
-				{ name = 'nvim_lua' },
-		        { name = 'luasnip' },
-				{ name = 'path' },
-				{ name = 'buffer' },
+				{ name = "nvim_lsp" },
+				{ name = "nvim_lua" },
+				{ name = "luasnip" },
+				{ name = "path" },
+				{ name = "buffer" },
 			},
 			mapping = cmp_mappings,
 			sorting = {
@@ -174,6 +174,12 @@ return {
 
 				-- ts is handled by typescript-tools plugin
 				tsserver = lsp.noop,
+
+				stylelint_lsp = function()
+					require("lspconfig").stylelint_lsp.setup({
+						filetypes = { "css", "scss" },
+					})
+				end,
 			},
 		})
 
@@ -196,10 +202,9 @@ return {
 			end
 		end, { silent = true })
 
-		require("typescript-tools").setup {
+		require("typescript-tools").setup({
 			settings = {
-				separate_diagnostic_server = true,
-			}
-		}
+			},
+		})
 	end,
 }
