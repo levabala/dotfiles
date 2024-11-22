@@ -56,3 +56,7 @@ vim.keymap.set("n", "<leader>ge", ":EslintFixAll<CR>", { silent = true })
 
 -- insert mode copy current word
 vim.keymap.set("i", "<C-y>", "<ESC>yiw ea", { silent = true })
+
+-- quickfix list navigation
+vim.keymap.set("n", "[q", ":cnext<CR>", { silent = true })
+vim.keymap.set("n", "]q", ":cprev<CR>", { silent = true })

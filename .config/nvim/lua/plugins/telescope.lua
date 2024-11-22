@@ -51,14 +51,33 @@ return {
 			builtin.live_grep({ grep_open_files = true })
 		end, {})
 		vim.keymap.set("n", "<leader>s", builtin.lsp_document_symbols, {})
+		vim.keymap.set("n", "<leader>d", builtin.diagnostics, {})
 		vim.keymap.set("n", "gb", builtin.buffers, {})
 		vim.keymap.set("n", "gt", builtin.help_tags, {})
+
 		vim.keymap.set("n", "gh", function()
-			builtin.oldfiles({ only_cwd = true })
+			builtin.oldfiles({
+				only_cwd = true,
+			})
 		end, {})
 
 		vim.keymap.set("n", "gu", "<cmd>Telescope undo<cr>")
 		-- vim.keymap.set("n", "gm", "<cmd>Telescope macros<cr>")
+
+		-- chatgpt (c)
+		local function grep_in_oil_dir()
+			local oil_path = vim.fn.expand("%")
+			if not oil_path:match("^oil://") then
+				print("Not in an Oil directory")
+				return
+			end
+
+			local local_path = oil_path:gsub("^oil://", "")
+
+			extensions.live_grep_args.live_grep_args({ cwd = local_path })
+		end
+
+		vim.keymap.set("n", "<leader>i", grep_in_oil_dir) -- Set <leader>i to grep in Oil directory
 
 		tel.load_extension("undo")
 		tel.load_extension("fzf")

@@ -42,3 +42,5 @@ vim.cmd([[
 vim.cmd([[
 	au VimEnter * Copilot disable
 ]])
+
+vim.opt.langmap = "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯБЮЖЭХЪ;ABCDEFGHIJKLMNOPQRSTUVWXYZ<>:\"{},фисвуапршолдьтщзйкыегмцчнябюж.эхъ;abcdefghijklmnopqrstuvwxyz\\,./;'[]"

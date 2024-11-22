@@ -37,11 +37,11 @@ return {
 
 		cmp.setup({
 			sources = {
-				{ name = "nvim_lsp" },
-				{ name = "nvim_lua" },
-				{ name = "luasnip" },
-				{ name = "path" },
-				{ name = "buffer" },
+				{ name = "buffer", priority = 1 },
+				{ name = "nvim_lsp", priority = 2 },
+				{ name = "path", priority = 3 },
+				{ name = "nvim_lua", priority = 4 },
+				{ name = "luasnip", priority = 5 },
 			},
 			mapping = cmp_mappings,
 			sorting = {

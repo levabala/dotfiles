@@ -104,5 +104,7 @@ export PRETTIERD_DEFAULT_CONFIG=$HOME/.prettierrc.json
 export PATH="$PATH:$HOME/.rvm/bin"
 
 export PATH=bin:$PATH
+export PATH=/Users/levabala/bin:$PATH
 
 ulimit -n 10240
+
