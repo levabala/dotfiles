@@ -173,7 +173,7 @@ return {
 				end,
 
 				-- ts is handled by typescript-tools plugin
-				tsserver = lsp.noop,
+				ts_ls = lsp.noop,
 
 				stylelint_lsp = function()
 					require("lspconfig").stylelint_lsp.setup({

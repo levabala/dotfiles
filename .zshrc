@@ -108,3 +108,7 @@ export PATH=/Users/levabala/bin:$PATH
 
 ulimit -n 10240
 
+# Created by `pipx` on 2024-10-24 06:33:29
+export PATH="$PATH:/Users/levabala/.local/bin"
+
+export PATH="$(brew --prefix llvm@16)/bin:$PATH"

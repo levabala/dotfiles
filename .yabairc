@@ -66,4 +66,6 @@ yabai -m rule --add app=".*" sub-layer=normal
 # focus window after active display changes
 # yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
 
+# yabai -m signal --add event=space_changed action="yabai -m window --focus first"
+
 echo "yabai configuration loaded.."

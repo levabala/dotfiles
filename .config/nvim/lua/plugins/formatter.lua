@@ -27,6 +27,14 @@ return {
 			}
 		end
 
+		local black = function()
+			return {
+					exe = "black",
+                    args = { "-l 79", "--quiet", "-" },
+                    stdin = true
+			}
+		end
+
 		require("formatter").setup({
 			logging = true,
 			log_level = vim.log.levels.WARN,
@@ -67,6 +75,9 @@ return {
 				racket = {
 					racofmt,
 				},
+				python = {
+					black,
+				}
 			},
 		})
 
