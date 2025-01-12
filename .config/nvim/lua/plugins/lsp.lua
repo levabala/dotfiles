@@ -202,6 +202,8 @@ return {
 			end
 		end, { silent = true })
 
+		require("luasnip.loaders.from_vscode").lazy_load()
+
 		require("typescript-tools").setup({
 			settings = {
 			},
