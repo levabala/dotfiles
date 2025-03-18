@@ -15,7 +15,7 @@ return {
 			end,
 		})
 		vim.api.nvim_set_keymap("n", "<leader>at", ":AiderRun<CR>", { noremap = true, silent = true })
-		vim.api.nvim_set_keymap("n", "<leader>aT", ":let g:aider_command = 'aider --no-auto-commit --vim --model sonnet --map-tokens 0  --dark-mode --code-theme monokai --no-git  --input-history-file /Users/levabala/.aider.input.history.arc --chat-history-file /Users/levabala/.aider.chat.history.md.arc --llm-history-file /Users/levabala/.aider.llm.history.arc --read AIDER.md'<CR>:AiderRun<CR>", { noremap = true, silent = true })
+		vim.api.nvim_set_keymap("n", "<leader>aT", ":let g:aider_command = 'aider --no-auto-commit --vim --model deepseek --map-tokens 0  --dark-mode --code-theme monokai --no-git  --input-history-file /Users/levabala/.aider.input.history.arc --chat-history-file /Users/levabala/.aider.chat.history.md.arc --llm-history-file /Users/levabala/.aider.llm.history.arc --read AIDER.md'<CR>:AiderRun<CR>", { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<leader>aA", ":AiderAddCurrentFile<CR>", { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<leader>aa", ":AiderSilentAddCurrentFile<CR>", { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<leader>ab", ":AiderAddBuffers<CR>", { noremap = true, silent = true })
