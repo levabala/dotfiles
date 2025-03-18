@@ -4,9 +4,12 @@ return {
 		local util = require("formatter.util")
 
 		local prettierd = function()
+			local filepath = vim.api.nvim_buf_get_name(0)
+			local escaped_filepath = "'" .. filepath .. "'"
+
 			return {
 				exe = "prettierd",
-				args = { vim.api.nvim_buf_get_name(0) },
+				args = { escaped_filepath },
 				stdin = true,
 			}
 		end
@@ -29,9 +32,9 @@ return {
 
 		local black = function()
 			return {
-					exe = "black",
-                    args = { "-l 79", "--quiet", "-" },
-                    stdin = true
+				exe = "black",
+				args = { "-l 79", "--quiet", "-" },
+				stdin = true,
 			}
 		end
 
@@ -77,7 +80,7 @@ return {
 				},
 				python = {
 					black,
-				}
+				},
 			},
 		})
 

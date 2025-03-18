@@ -37,11 +37,19 @@ return {
 
 		cmp.setup({
 			sources = {
-				{ name = "buffer", priority = 1 },
-				{ name = "nvim_lsp", priority = 2 },
-				{ name = "path", priority = 3 },
-				{ name = "nvim_lua", priority = 4 },
-				{ name = "luasnip", priority = 5 },
+				{ name = "nvim_lsp", priority = 5 },
+				{ name = "path", priority = 4 },
+				{ name = "nvim_lua", priority = 3 },
+				{ name = "luasnip", priority = 2 },
+				{
+					name = "buffer",
+					priority = 1,
+					option = {
+						get_bufnrs = function()
+							return vim.api.nvim_list_bufs()
+						end,
+					},
+				},
 			},
 			mapping = cmp_mappings,
 			sorting = {
@@ -205,8 +213,7 @@ return {
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		require("typescript-tools").setup({
-			settings = {
-			},
+			settings = {},
 		})
 	end,
 }

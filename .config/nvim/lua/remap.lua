@@ -60,3 +60,15 @@ vim.keymap.set("i", "<C-y>", "<ESC>yiw ea", { silent = true })
 -- quickfix list navigation
 vim.keymap.set("n", "[q", ":cnext<CR>", { silent = true })
 vim.keymap.set("n", "]q", ":cprev<CR>", { silent = true })
+
+vim.g.diagnostics_visible = true
+function _G.toggle_diagnostics()
+	if vim.g.diagnostics_visible then
+		vim.g.diagnostics_visible = false
+		vim.diagnostic.disable()
+	else
+		vim.g.diagnostics_visible = true
+		vim.diagnostic.enable()
+	end
+end
+vim.keymap.set("n", "<leader>tt", ":call v:lua.toggle_diagnostics()<CR>", { silent = true, noremap = true })

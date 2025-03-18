@@ -112,3 +112,4 @@ ulimit -n 10240
 export PATH="$PATH:/Users/levabala/.local/bin"
 
 export PATH="$(brew --prefix llvm@16)/bin:$PATH"
+export PATH="/Users/levabala/.bun/bin:$PATH"
