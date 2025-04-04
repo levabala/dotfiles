@@ -1,12 +1,13 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "AndreM222/copilot-lualine" },
+	dependencies = { "AndreM222/copilot-lualine", "phha/zenburn.nvim" },
 	lazy = false,
 	init = function()
 		require("lualine").setup({
 			options = {
 				icons_enabled = false,
-				theme = "auto",
+				-- theme = "auto",
+				theme = "zenburn",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {

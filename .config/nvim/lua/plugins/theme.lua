@@ -61,25 +61,13 @@ return {
 		enabled = false,
 	},
 	{
-		"sainnhe/sonokai",
-		init = function()
-			-- vim.g.sonokai_style = "espresso"
-			-- vim.g.sonokai_style = "maia"
-			vim.g.sonokai_style = "shusia"
-			vim.cmd([[colorscheme sonokai]])
-		end,
-		lazy = false,
-		priority = 1000, -- make sure to load this before all the other start plugins
-		enabled = true,
-	},
-	{
 		"tanvirtin/monokai.nvim",
 		init = function()
 			require("monokai").setup({
 				-- palette = {
 				-- 	base2 = "#302c2b",
 				-- },
-				palette = require('monokai').ristretto,
+				palette = require("monokai").ristretto,
 				italics = false,
 			})
 		end,
@@ -92,7 +80,7 @@ return {
 		init = function()
 			require("monokai-pro").setup({
 				filter = "ristretto",
-				terminal_colors = true
+				terminal_colors = true,
 			})
 
 			vim.cmd([[colorscheme monokai-pro]])
@@ -100,5 +88,25 @@ return {
 		lazy = false,
 		priority = 1000, -- make sure to load this before all the other start plugins
 		enabled = false,
+	},
+	{
+		"sainnhe/sonokai",
+		init = function()
+			-- vim.g.sonokai_style = "espresso"
+			-- vim.g.sonokai_style = "maia"
+			vim.g.sonokai_style = "shusia"
+			vim.cmd([[colorscheme sonokai]])
+		end,
+		lazy = false,
+		priority = 1000, -- make sure to load this before all the other start plugins
+		enabled = false,
+	},
+	{
+		"phha/zenburn.nvim",
+		init = function()
+			require("zenburn").setup()
+		end,
+		enabled = true,
+		priority = 1000, -- make sure to load this before all the other start plugins
 	},
 }
