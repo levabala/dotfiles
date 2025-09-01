@@ -42,11 +42,13 @@ return {
 						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 					},
 				},
+				file_ignore_patterns = { "node_modules", "bun.lock" },
 			},
 		})
 
 		vim.keymap.set("n", "<leader>k", builtin.find_files, {})
-		vim.keymap.set("n", "<leader>j", extensions.live_grep_args.live_grep_args, {})
+		-- vim.keymap.set("n", "<leader>j", extensions.live_grep_args.live_grep_args, {})
+		vim.keymap.set("n", "<leader>j", builtin.live_grep, {})
 		vim.keymap.set("n", "<leader>l", function()
 			builtin.live_grep({ grep_open_files = true })
 		end, {})

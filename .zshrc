@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/levabala/.zsh/completions:"* ]]; then export FPATH="/Users/levabala/.zsh/completions:$FPATH"; fi
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 # enable vim mode
@@ -113,3 +115,21 @@ export PATH="$PATH:/Users/levabala/.local/bin"
 
 export PATH="$(brew --prefix llvm@16)/bin:$PATH"
 export PATH="/Users/levabala/.bun/bin:$PATH"
+. "/Users/levabala/.deno/env"
+# opencode
+export PATH=/Users/levabala/.opencode/bin:$PATH
+
+export EDITOR=vim
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/levabala/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# pnpm
+export PNPM_HOME="/Users/levabala/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
