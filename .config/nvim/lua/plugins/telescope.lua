@@ -81,61 +81,43 @@ return {
 
 		vim.keymap.set("n", "<leader>i", grep_in_oil_dir) -- Set <leader>i to grep in Oil directory
 
-		-- Zoekt telescope picker
+		-- Zoekt telescope picker (live search)
 		local function zoekt_search()
-			vim.ui.input({ prompt = "Zoekt search: " }, function(query)
-				if not query or query == "" then
-					return
-				end
-				
-				local pickers = require("telescope.pickers")
-				local finders = require("telescope.finders")
-				local conf = require("telescope.config").values
-				
-				local handle = io.popen("zoekt " .. vim.fn.shellescape(query) .. " 2>/dev/null")
-				if not handle then
-					print("Error: Could not run zoekt command")
-					return
-				end
-				
-				local results = {}
-				for line in handle:lines() do
-					-- Parse zoekt output format: filename:linenumber:content
-					local filename, lnum, content = line:match("^([^:]+):(%d+):(.*)$")
-					if filename and lnum and content then
-						table.insert(results, {
+			local pickers = require("telescope.pickers")
+			local finders = require("telescope.finders")
+			local conf = require("telescope.config").values
+			
+			pickers.new({}, {
+				prompt_title = "Zoekt Live Search",
+				finder = finders.new_async_job({
+					command_generator = function(prompt)
+						if not prompt or prompt == "" then
+							return nil
+						end
+						return { "zoekt", prompt }
+					end,
+					entry_maker = function(line)
+						-- Parse zoekt output format: filename:linenumber:content
+						local filename, lnum, content = line:match("^([^:]+):(%d+):(.*)$")
+						if not filename or not lnum or not content then
+							return nil
+						end
+						
+						return {
+							value = line,
+							display = line,
+							ordinal = line,
 							filename = filename,
 							lnum = tonumber(lnum),
+							col = 1,
 							text = content,
-							display = line
-						})
-					end
-				end
-				handle:close()
-				
-				if #results == 0 then
-					print("No results found for: " .. query)
-					return
-				end
-				
-				pickers.new({}, {
-					prompt_title = "Zoekt Search Results",
-					finder = finders.new_table({
-						results = results,
-						entry_maker = function(entry)
-							return {
-								value = entry,
-								display = entry.display,
-								ordinal = entry.filename .. entry.text,
-								filename = entry.filename,
-								lnum = entry.lnum,
-							}
-						end,
-					}),
-					sorter = conf.generic_sorter({}),
-					previewer = conf.grep_previewer({}),
-				}):find()
-			end)
+						}
+					end,
+					cwd = vim.fn.getcwd(),
+				}),
+				sorter = conf.generic_sorter({}),
+				previewer = conf.grep_previewer({}),
+			}):find()
 		end
 		
 		vim.keymap.set("n", "<leader>z", zoekt_search, { desc = "Zoekt search" })
