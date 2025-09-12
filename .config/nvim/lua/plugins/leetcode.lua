@@ -20,4 +20,5 @@ return {
 			["normal"] = {},
 		},
 	},
+	enabled = false,
 }

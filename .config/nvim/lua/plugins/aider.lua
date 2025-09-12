@@ -33,5 +33,6 @@ return {
 		vim.api.nvim_set_keymap("n", "<leader>ah", ":AiderHide<CR>", { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("v", "<leader>av", ":AiderVisualTextWithPrompt<CR>", { noremap = true, silent = true })
 	end,
+	enabled = false,
 	lazy = false,
 }

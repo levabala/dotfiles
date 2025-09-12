@@ -42,8 +42,12 @@ vim.cmd([[
 	au InsertLeave * silent !xkblayout-state set 0
 ]])
 
-vim.cmd([[
-	au VimEnter * Copilot disable
-	]])
+if vim.fn.exists(':Copilot') == 2 then
+  vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+      vim.cmd('Copilot disable')
+    end,
+  })
+end
 
 -- vim.opt.langmap = [[ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ\,;QWERTYUIOP{}\|ASDFGHJKL:\"ZXCVBNM<>?,йцукенгшщзхъ\\фывапролджэячсмитьбю.;qwertyuiop[]\\asdfghjkl\;'zxcvbnm\,./]]
