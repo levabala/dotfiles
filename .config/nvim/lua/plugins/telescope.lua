@@ -119,6 +119,13 @@ return {
 				}),
 				sorter = conf.generic_sorter({}),
 				previewer = conf.grep_previewer({}),
+				cache_picker = {
+					num_pickers = 1,
+					limit_entries = 1000,
+				},
+				selection_strategy = "reset",
+				-- sorting_strategy = "ascending",
+				scroll_strategy = "cycle",
 			}):find()
 		end
 		
