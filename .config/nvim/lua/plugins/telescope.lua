@@ -87,6 +87,8 @@ return {
 			local finders = require("telescope.finders")
 			local conf = require("telescope.config").values
 			
+			local max_results = 100000 -- Limit search results
+			
 			pickers.new({}, {
 				prompt_title = "Zoekt Live Search",
 				finder = finders.new_async_job({
@@ -94,7 +96,7 @@ return {
 						if not prompt or prompt == "" then
 							return nil
 						end
-						return { "zoekt", prompt }
+						return { "sh", "-c", "zoekt " .. vim.fn.shellescape(prompt) .. " | head -n " .. tostring(max_results) }
 					end,
 					entry_maker = function(line)
 						-- Parse zoekt output format: filename:linenumber:content
