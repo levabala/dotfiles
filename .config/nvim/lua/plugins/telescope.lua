@@ -42,7 +42,7 @@ return {
 						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
 					},
 				},
-				file_ignore_patterns = { "node_modules", "bun.lock" },
+				-- file_ignore_patterns = { "node_modules", "bun.lock" },
 			},
 		})
 
@@ -80,6 +80,65 @@ return {
 		end
 
 		vim.keymap.set("n", "<leader>i", grep_in_oil_dir) -- Set <leader>i to grep in Oil directory
+
+		-- Zoekt telescope picker
+		local function zoekt_search()
+			vim.ui.input({ prompt = "Zoekt search: " }, function(query)
+				if not query or query == "" then
+					return
+				end
+				
+				local pickers = require("telescope.pickers")
+				local finders = require("telescope.finders")
+				local conf = require("telescope.config").values
+				
+				local handle = io.popen("zoekt " .. vim.fn.shellescape(query) .. " 2>/dev/null")
+				if not handle then
+					print("Error: Could not run zoekt command")
+					return
+				end
+				
+				local results = {}
+				for line in handle:lines() do
+					-- Parse zoekt output format: filename:linenumber:content
+					local filename, lnum, content = line:match("^([^:]+):(%d+):(.*)$")
+					if filename and lnum and content then
+						table.insert(results, {
+							filename = filename,
+							lnum = tonumber(lnum),
+							text = content,
+							display = line
+						})
+					end
+				end
+				handle:close()
+				
+				if #results == 0 then
+					print("No results found for: " .. query)
+					return
+				end
+				
+				pickers.new({}, {
+					prompt_title = "Zoekt Search Results",
+					finder = finders.new_table({
+						results = results,
+						entry_maker = function(entry)
+							return {
+								value = entry,
+								display = entry.display,
+								ordinal = entry.filename .. entry.text,
+								filename = entry.filename,
+								lnum = entry.lnum,
+							}
+						end,
+					}),
+					sorter = conf.generic_sorter({}),
+					previewer = conf.grep_previewer({}),
+				}):find()
+			end)
+		end
+		
+		vim.keymap.set("n", "<leader>z", zoekt_search, { desc = "Zoekt search" })
 
 		tel.load_extension("undo")
 		tel.load_extension("fzf")
