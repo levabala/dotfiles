@@ -105,10 +105,65 @@ return {
 							return nil
 						end
 						
+						-- Progressive path folding - fold segments one by one from start
+						local function progressive_fold_path(path, max_width)
+							if #path <= max_width then
+								return path
+							end
+							
+							local segments = {}
+							for segment in path:gmatch("[^/]+") do
+								table.insert(segments, segment)
+							end
+							
+							-- Don't fold if only one segment (just filename)
+							if #segments <= 1 then
+								return path
+							end
+							
+							-- Try folding segments one by one from the start
+							for fold_count = 1, #segments - 1 do -- never fold the last segment (filename)
+								local folded_path = ""
+								for i, segment in ipairs(segments) do
+									if i <= fold_count then
+										folded_path = folded_path .. segment:sub(1,1) .. "/"
+									else
+										folded_path = folded_path .. segment
+										if i < #segments then folded_path = folded_path .. "/" end
+									end
+								end
+								
+								if #folded_path <= max_width then
+									return folded_path
+								end
+							end
+							
+							-- If still too long, fold all but last segment
+							local result = ""
+							for i, segment in ipairs(segments) do
+								if i < #segments then
+									result = result .. segment:sub(1,1) .. "/"
+								else
+									result = result .. segment
+								end
+							end
+							return result
+						end
+						
+						-- Get actual window width and calculate available space for path (use 60% of telescope width)
+						local win_width = vim.o.columns
+						local telescope_width = math.floor(win_width * 0.8) -- telescope uses ~80% of screen
+						local available_width = math.floor(telescope_width * 0.6) -- use 60% of telescope width for path
+						local line_num_width = #tostring(lnum) + 1 -- +1 for colon
+						local max_path_width = math.max(20, available_width - line_num_width - 5) -- -5 for margins
+						
+						local shortened_path = progressive_fold_path(filename, max_path_width)
+						local display_line = shortened_path .. ":" .. lnum .. ":" .. content
+						
 						return {
 							value = line,
-							display = line,
-							ordinal = line,
+							display = display_line,
+							ordinal = filename .. " " .. content,
 							filename = filename,
 							lnum = tonumber(lnum),
 							col = 1,
