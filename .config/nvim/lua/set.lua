@@ -1,3 +1,5 @@
+vim.o.exrc = true
+
 vim.opt.guicursor = ""
 
 vim.opt.number = true

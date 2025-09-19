@@ -72,3 +72,33 @@ function _G.toggle_diagnostics()
 	end
 end
 vim.keymap.set("n", "<leader>tt", ":call v:lua.toggle_diagnostics()<CR>", { silent = true, noremap = true })
+
+vim.keymap.set("n", "<leader>yp", function()
+	vim.fn.setreg("+", vim.fn.expand("%:."))
+	print("Yanked path: " .. vim.fn.getreg("+"))
+end, { desc = "Yank path relative to CWD" })
+
+-- Zoekt reindexing command
+vim.api.nvim_create_user_command("ZoektGitIndex", function()
+	local cwd = vim.fn.getcwd()
+	local cmd = "zoekt-git-index -index ~/.zoekt " .. vim.fn.shellescape(cwd)
+	print("Reindexing with zoekt: " .. cwd)
+	vim.fn.jobstart(cmd, {
+		on_exit = function(_, exit_code)
+			if exit_code == 0 then
+				print("Zoekt indexing completed successfully")
+			else
+				print("Zoekt indexing failed with exit code: " .. exit_code)
+			end
+		end,
+		on_stdout = function(_, data)
+			if data and #data > 0 then
+				for _, line in ipairs(data) do
+					if line and line ~= "" then
+						print("zoekt: " .. line)
+					end
+				end
+			end
+		end,
+	})
+end, { desc = "Reindex current git repository with zoekt" })

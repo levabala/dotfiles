@@ -172,20 +172,41 @@ return {
 			end, opts)
 		end)
 
+		local Path = require("plenary.path")
+		local yarn_sdk_dir = Path:new("./.yarn/sdks")
+		local nodePath = yarn_sdk_dir:exists() and yarn_sdk_dir:absolute() or ""
+
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = {},
+			ensure_installed = {
+				"bashls",
+				"cssls",
+				"eslint",
+				"html",
+				"jsonls",
+				"lua_ls",
+				"sqlls",
+			},
+			automatic_installation = true,
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
 				end,
 
-				-- ts is handled by typescript-tools plugin
 				ts_ls = lsp.noop,
 
 				stylelint_lsp = function()
 					require("lspconfig").stylelint_lsp.setup({
 						filetypes = { "css", "scss" },
+					})
+				end,
+
+				eslint = function()
+					lspconfig.eslint.setup({
+						settings = {
+							workspaceDirectory = { mode = "location" },
+							nodePath = nodePath,
+						},
 					})
 				end,
 			},
@@ -211,9 +232,5 @@ return {
 		end, { silent = true })
 
 		require("luasnip.loaders.from_vscode").lazy_load()
-
-		require("typescript-tools").setup({
-			settings = {},
-		})
 	end,
 }
