@@ -68,6 +68,11 @@ return {
 			completion = {
 				completeopt = "menu,menuone,noinsert,noselect",
 			},
+			window = {
+				completion = cmp.config.window.bordered({
+					max_width = math.floor(vim.o.columns * 0.5),
+				}),
+			},
 		})
 
 		lsp.set_preferences({
@@ -128,6 +133,7 @@ return {
 			vim.keymap.set("n", "gD", vim.lsp.buf.definition, opts)
 			vim.keymap.set("n", "gd", function()
 				vim.lsp.buf.definition({ on_list = on_list_node_modules })
+				vim.cmd("normal! zz")
 			end, opts)
 			vim.keymap.set("n", "K", function()
 				vim.lsp.buf.hover()
@@ -178,16 +184,6 @@ return {
 
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = {
-				"bashls",
-				"cssls",
-				"eslint",
-				"html",
-				"jsonls",
-				"lua_ls",
-				"sqlls",
-			},
-			automatic_installation = true,
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})

@@ -84,6 +84,8 @@ vim.api.nvim_create_user_command("ZoektGitIndex", function()
 	local cmd = "zoekt-git-index -index ~/.zoekt " .. vim.fn.shellescape(cwd)
 	print("Reindexing with zoekt: " .. cwd)
 	vim.fn.jobstart(cmd, {
+		stdout_buffered = false,
+		stderr_buffered = false,
 		on_exit = function(_, exit_code)
 			if exit_code == 0 then
 				print("Zoekt indexing completed successfully")
@@ -95,7 +97,16 @@ vim.api.nvim_create_user_command("ZoektGitIndex", function()
 			if data and #data > 0 then
 				for _, line in ipairs(data) do
 					if line and line ~= "" then
-						print("zoekt: " .. line)
+						print("zoekt stdout: " .. line)
+					end
+				end
+			end
+		end,
+		on_stderr = function(_, data)
+			if data and #data > 0 then
+				for _, line in ipairs(data) do
+					if line and line ~= "" then
+						print("zoekt stderr: " .. line)
 					end
 				end
 			end
